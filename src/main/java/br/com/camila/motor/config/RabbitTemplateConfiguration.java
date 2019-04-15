@@ -20,7 +20,9 @@ import br.com.camila.motor.annotation.EventTemplate;
 import br.com.camila.motor.annotation.RabbitEnabled;
 import br.com.camila.motor.interceptor.HeaderMessageInterceptor;
 import br.com.camila.motor.interceptor.TraceMessageInterceptor;
+import br.com.camila.motor.message.AnalisarPosPropostaMotorMessage;
 import br.com.camila.motor.message.AnalisarPrePropostaMotorMessage;
+import br.com.camila.motor.message.PosPropostaAnalisadaMessage;
 import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
 import br.com.camila.motor.messaging.MessageOutbox;
 import br.com.camila.motor.messaging.Messaging;
@@ -55,7 +57,9 @@ public class RabbitTemplateConfiguration {
         final Map<String, Class<?>> mapping = new HashMap<>();
         asList(
             AnalisarPrePropostaMotorMessage.class,
-            PrePropostaAnalisadaMessage.class
+            PrePropostaAnalisadaMessage.class,
+            AnalisarPosPropostaMotorMessage.class,
+            PosPropostaAnalisadaMessage.class
         )
             .forEach(clazz -> mapping.put(clazz.getSimpleName(), clazz));
 
@@ -80,7 +84,6 @@ public class RabbitTemplateConfiguration {
 
         return rabbitTemplate;
     }
-
 
     /**
      * Rabbit Templates
