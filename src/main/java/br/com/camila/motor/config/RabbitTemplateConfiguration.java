@@ -1,16 +1,11 @@
 package br.com.camila.motor.config;
 
-import br.com.camila.statemachine.annotation.EventTemplate;
-import br.com.camila.statemachine.annotation.RabbitEnabled;
-import br.com.camila.statemachine.event.AnalisarPrePropostaEvent;
-import br.com.camila.statemachine.event.CriarPropostaEvent;
-import br.com.camila.statemachine.interceptor.HeaderMessageInterceptor;
-import br.com.camila.statemachine.interceptor.TraceMessageInterceptor;
-import br.com.camila.statemachine.message.AnalisarPrePropostaMessage;
-import br.com.camila.statemachine.message.CriarPropostaMessage;
-import br.com.camila.statemachine.messaging.MessageOutbox;
-import br.com.camila.statemachine.messaging.Messaging;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static java.util.Arrays.asList;
+import static java.util.Objects.nonNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
@@ -19,11 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static java.util.Arrays.asList;
-import static java.util.Objects.nonNull;
+import br.com.camila.motor.annotation.EventTemplate;
+import br.com.camila.motor.annotation.RabbitEnabled;
+import br.com.camila.motor.interceptor.HeaderMessageInterceptor;
+import br.com.camila.motor.interceptor.TraceMessageInterceptor;
+import br.com.camila.motor.message.AnalisarPrePropostaMotorMessage;
+import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
+import br.com.camila.motor.messaging.MessageOutbox;
+import br.com.camila.motor.messaging.Messaging;
 
 @Configuration
 @RabbitEnabled
@@ -53,10 +53,10 @@ public class RabbitTemplateConfiguration {
     DefaultClassMapper jsonClassMapper() {
 
         final Map<String, Class<?>> mapping = new HashMap<>();
-        asList(CriarPropostaMessage.class,
-            AnalisarPrePropostaMessage.class,
-            CriarPropostaEvent.class,
-            AnalisarPrePropostaEvent.class)
+        asList(
+            AnalisarPrePropostaMotorMessage.class,
+            PrePropostaAnalisadaMessage.class
+        )
             .forEach(clazz -> mapping.put(clazz.getSimpleName(), clazz));
 
         final DefaultClassMapper classMapper = new DefaultClassMapper();

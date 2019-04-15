@@ -1,20 +1,22 @@
 package br.com.camila.motor.config;
 
-import br.com.camila.statemachine.annotation.RabbitEnabled;
-import br.com.camila.statemachine.interceptor.HeaderMessageInterceptor;
-import br.com.camila.statemachine.interceptor.ListenerExceptionInterceptor;
-import br.com.camila.statemachine.interceptor.TraceMessageInterceptor;
+import static java.util.Arrays.stream;
+import static java.util.Optional.ofNullable;
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.aopalliance.aop.Advice;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
-
-import static java.util.Arrays.stream;
-import static java.util.Optional.ofNullable;
-import static java.util.stream.Collectors.toList;
+import br.com.camila.motor.annotation.RabbitEnabled;
+import br.com.camila.motor.interceptor.HeaderMessageInterceptor;
+import br.com.camila.motor.interceptor.ListenerExceptionInterceptor;
+import br.com.camila.motor.interceptor.TraceMessageInterceptor;
 
 @Configuration
 @RabbitEnabled

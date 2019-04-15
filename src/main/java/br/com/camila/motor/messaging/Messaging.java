@@ -14,7 +14,10 @@ public interface Messaging {
     MessageInbox ANALISAR_PRE_PROPOSTA_MOTOR = new MessageInbox("motor.analisar-pre-proposta-motor.message");
     MessageInbox ANALISAR_POS_PROPOSTA_MOTOR = new MessageInbox("motor.analisar-pos-proposta-motor.message");
 
+    MessageOutbox PRE_PROPOSTA_ANALISADA = new MessageOutbox("proposta.pre-proposta-analisada.message");
+
     String EXCHANGE = "motor.exchange";
+    String EXCHANGE_EVENTS = "motor.events.exchange";
 
     String QUEUE_ANALISAR_PRE_PROPOSTA = "motor.analisar-pre-proposta.queue";
     String QUEUE_ANALISAR_POS_PROPOSTA = "motor.analisar-pos-proposta.queue";

@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class EventInbox {
 
-    private static final String PROJECT = "proposta";
+    private static final String PROJECT = "motor";
 
     private final String queue;
 

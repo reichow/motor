@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: motor
+  autoconfigure:
+    exclude:
+    - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+  messages:
+    basename: i18n/messages
+  rabbitmq:
+    enabled: ${RABBIT_ENABLED:true}
+    listener:
+      simple:
+        default-requeue-rejected: false
+    template:
+      reply-timeout: ${RABBIT_REPLY_TIMEOUT:15000}
