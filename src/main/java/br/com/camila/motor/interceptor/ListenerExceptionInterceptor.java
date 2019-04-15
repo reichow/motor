@@ -89,10 +89,6 @@ public class ListenerExceptionInterceptor implements ThrowsAdvice {
             .destination(obterDestination(message.getMessageProperties()))
             .error(obterError(th))
             .message(obterMessage(message));
-
-//        rabbitTemplate.send(GFE.getRoutingKey(), withBody(objectMapper.writeValueAsBytes(mappedMessage.build()))
-//            .setContentType(MediaType.APPLICATION_JSON_VALUE)
-//            .build());
     }
 
     private Long obterTraceId(final MessageProperties messageProperties) {

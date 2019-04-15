@@ -13,6 +13,8 @@ import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
 import br.com.camila.motor.messaging.Messaging;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Random;
+
 @Component
 @RabbitListener(queues = Messaging.QUEUE_ANALISAR_PRE_PROPOSTA)
 @Slf4j
@@ -23,16 +25,28 @@ public class AnalisarPrePropostaListener {
     private RabbitTemplate rabbitTemplate;
 
     @RabbitHandler
-    void receive(
-        @Payload final AnalisarPrePropostaMotorMessage message) {
+    void receive(@Payload final AnalisarPrePropostaMotorMessage message) {
 
         log.info("Mensagem: {}", message);
 
-        PrePropostaAnalisadaMessage pre = PrePropostaAnalisadaMessage.builder().numeroProposta(message.getNumeroProposta()).estado("APROVADO_PRE").build();
+        PrePropostaAnalisadaMessage pre = PrePropostaAnalisadaMessage.builder()
+                .numeroProposta(message.getNumeroProposta())
+                .estado(definirEstado()).build();
 
         rabbitTemplate.convertAndSend(
             Messaging.PRE_PROPOSTA_ANALISADA.getExchange(),
             Messaging.PRE_PROPOSTA_ANALISADA.getRoutingKey(),
             pre);
+    }
+
+    private String definirEstado() {
+        Random random = new Random();
+        Estados estado = Estados.values()[random.nextInt(AnalisarPosPropostaListener.Estados.values().length)];
+        return estado.toString();
+    }
+
+    enum Estados {
+        APROVADO_PRE,
+        NEGADO_PRE
     }
 }
