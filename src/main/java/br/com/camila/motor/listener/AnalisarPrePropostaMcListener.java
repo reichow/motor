@@ -10,32 +10,32 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.camila.motor.annotation.EventTemplate;
-import br.com.camila.motor.message.AnalisarPrePropostaMotorMessage;
-import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
+import br.com.camila.motor.message.AnalisarPrePropostaMcMotorMessage;
+import br.com.camila.motor.message.PrePropostaMcAnalisadaMessage;
 import br.com.camila.motor.messaging.Messaging;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@RabbitListener(queues = Messaging.QUEUE_ANALISAR_PRE_PROPOSTA)
+@RabbitListener(queues = Messaging.QUEUE_ANALISAR_PRE_PROPOSTA_MC)
 @Slf4j
-public class AnalisarPrePropostaListener {
+public class AnalisarPrePropostaMcListener {
 
     @Autowired
     @EventTemplate
     private RabbitTemplate rabbitTemplate;
 
     @RabbitHandler
-    void receive(@Payload final AnalisarPrePropostaMotorMessage message) {
+    void receive(@Payload final AnalisarPrePropostaMcMotorMessage message) {
 
         log.info("Mensagem: {}", message);
 
-        PrePropostaAnalisadaMessage pre = PrePropostaAnalisadaMessage.builder()
-                .numeroProposta(message.getNumeroProposta())
-                .estado(definirEstado()).build();
+        PrePropostaMcAnalisadaMessage pre = PrePropostaMcAnalisadaMessage.builder()
+            .numeroProposta(message.getNumeroProposta())
+            .estado(definirEstado()).build();
 
         rabbitTemplate.convertAndSend(
-            Messaging.PRE_PROPOSTA_ANALISADA.getExchange(),
-            Messaging.PRE_PROPOSTA_ANALISADA.getRoutingKey(),
+            Messaging.PRE_PROPOSTA_MC_ANALISADA.getExchange(),
+            Messaging.PRE_PROPOSTA_MC_ANALISADA.getRoutingKey(),
             pre);
     }
 
@@ -47,6 +47,7 @@ public class AnalisarPrePropostaListener {
 
     enum Estados {
         APROVADO_PRE,
-        NEGADO_PRE
+        NEGADO_PRE,
+        PENDENTE_PRE
     }
 }

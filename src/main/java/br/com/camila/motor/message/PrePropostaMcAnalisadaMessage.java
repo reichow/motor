@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
-public class PrePropostaAnalisadaMessage implements Serializable {
+public class PrePropostaMcAnalisadaMessage implements Serializable {
 
     private static final long serialVersionUID = 6221925921068344351L;
 

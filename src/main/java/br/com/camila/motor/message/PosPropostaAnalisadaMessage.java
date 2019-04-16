@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.camila.motor.domain.TipoProposta;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -23,4 +24,6 @@ public class PosPropostaAnalisadaMessage implements Serializable {
     private String estado;
 
     private Long numeroProposta;
+
+    private TipoProposta proposta;
 }
