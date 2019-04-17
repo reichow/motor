@@ -22,11 +22,9 @@ import br.com.camila.motor.domain.TipoProposta;
 import br.com.camila.motor.interceptor.HeaderMessageInterceptor;
 import br.com.camila.motor.interceptor.TraceMessageInterceptor;
 import br.com.camila.motor.message.AnalisarPosPropostaMotorMessage;
-import br.com.camila.motor.message.AnalisarPrePropostaMcMotorMessage;
 import br.com.camila.motor.message.AnalisarPrePropostaMotorMessage;
 import br.com.camila.motor.message.PosPropostaAnalisadaMessage;
 import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
-import br.com.camila.motor.message.PrePropostaMcAnalisadaMessage;
 import br.com.camila.motor.messaging.MessageOutbox;
 import br.com.camila.motor.messaging.Messaging;
 
@@ -63,8 +61,6 @@ public class RabbitTemplateConfiguration {
             PrePropostaAnalisadaMessage.class,
             AnalisarPosPropostaMotorMessage.class,
             PosPropostaAnalisadaMessage.class,
-            AnalisarPrePropostaMcMotorMessage.class,
-            PrePropostaMcAnalisadaMessage.class,
             TipoProposta.class
         )
             .forEach(clazz -> mapping.put(clazz.getSimpleName(), clazz));

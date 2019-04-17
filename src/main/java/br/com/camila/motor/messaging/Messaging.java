@@ -7,12 +7,10 @@ public interface Messaging {
 
     //msg recebida da api proposta/sm
     MessageInbox ANALISAR_PRE_PROPOSTA_MOTOR = new MessageInbox("motor.analisar-pre-proposta-motor.message");
-    MessageInbox ANALISAR_PRE_PROPOSTA_MC_MOTOR = new MessageInbox("motor.analisar-pre-proposta-mc-motor.message");
     MessageInbox ANALISAR_POS_PROPOSTA_MOTOR = new MessageInbox("motor.analisar-pos-proposta-motor.message");
 
     //msg enviada para api proposta/sm
     MessageOutbox PRE_PROPOSTA_ANALISADA = new MessageOutbox("proposta.pre-proposta-analisada.message");
-    MessageOutbox PRE_PROPOSTA_MC_ANALISADA = new MessageOutbox("proposta.pre-proposta-analisada-mc.message");
     MessageOutbox POS_PROPOSTA_ANALISADA = new MessageOutbox("proposta.pos-proposta-analisada.message");
 
     //exchange
@@ -21,6 +19,5 @@ public interface Messaging {
 
     //filas
     String QUEUE_ANALISAR_PRE_PROPOSTA = "motor.analisar-pre-proposta.queue";
-    String QUEUE_ANALISAR_PRE_PROPOSTA_MC = "motor.analisar-pre-proposta-mc.queue";
     String QUEUE_ANALISAR_POS_PROPOSTA = "motor.analisar-pos-proposta.queue";
 }

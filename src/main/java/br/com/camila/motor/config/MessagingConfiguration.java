@@ -33,11 +33,6 @@ public class MessagingConfiguration {
     }
 
     @Bean
-    Queue analisarPrePropostaMcQueue() {
-        return new Queue(Messaging.QUEUE_ANALISAR_PRE_PROPOSTA_MC);
-    }
-
-    @Bean
     Queue analisarPosPropostaQueue() {
         return new Queue(Messaging.QUEUE_ANALISAR_POS_PROPOSTA);
     }
@@ -51,13 +46,6 @@ public class MessagingConfiguration {
         return BindingBuilder.bind(analisarPrePropostaQueue())
             .to(motorExchange())
             .with(Messaging.ANALISAR_PRE_PROPOSTA_MOTOR.getRoutingKey());
-    }
-
-    @Bean
-    Binding analisarPrePropostaMcQueueToMotorExchangeBinder() {
-        return BindingBuilder.bind(analisarPrePropostaMcQueue())
-            .to(motorExchange())
-            .with(Messaging.ANALISAR_PRE_PROPOSTA_MC_MOTOR.getRoutingKey());
     }
 
     @Bean

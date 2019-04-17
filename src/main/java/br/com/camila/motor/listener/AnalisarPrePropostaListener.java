@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.camila.motor.annotation.EventTemplate;
+import br.com.camila.motor.domain.TipoProposta;
 import br.com.camila.motor.message.AnalisarPrePropostaMotorMessage;
 import br.com.camila.motor.message.PrePropostaAnalisadaMessage;
 import br.com.camila.motor.messaging.Messaging;
@@ -30,8 +31,9 @@ public class AnalisarPrePropostaListener {
         log.info("Mensagem: {}", message);
 
         PrePropostaAnalisadaMessage pre = PrePropostaAnalisadaMessage.builder()
-                .numeroProposta(message.getNumeroProposta())
-                .estado(definirEstado()).build();
+            .numeroProposta(message.getNumeroProposta())
+            .estado(definirEstado(message.getProposta()))
+            .proposta(message.getProposta()).build();
 
         rabbitTemplate.convertAndSend(
             Messaging.PRE_PROPOSTA_ANALISADA.getExchange(),
@@ -39,14 +41,30 @@ public class AnalisarPrePropostaListener {
             pre);
     }
 
-    private String definirEstado() {
+    private String definirEstado(TipoProposta proposta) {
         Random random = new Random();
-        Estados estado = Estados.values()[random.nextInt(Estados.values().length)];
-        return estado.toString();
+
+        if (proposta.equals(TipoProposta.CONTRATACAO_CCR)) {
+            Estados estado = Estados.values()[random.nextInt(Estados.values().length)];
+            return estado.toString();
+        }
+
+        if (proposta.equals(TipoProposta.CONTRATACAO_MC)) {
+            EstadosMC estado = EstadosMC.values()[random.nextInt(EstadosMC.values().length)];
+            return estado.toString();
+        }
+
+        return null;
     }
 
     enum Estados {
         APROVADO_PRE,
         NEGADO_PRE
+    }
+
+    enum EstadosMC {
+        APROVADO_PRE,
+        NEGADO_PRE,
+        PENDENTE_PRE
     }
 }
