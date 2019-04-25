@@ -29,12 +29,12 @@ public class MessagingConfiguration {
 
     @Bean
     Queue analisarPrePropostaQueue() {
-        return new Queue(Messaging.QUEUE_ANALISAR_PRE_PROPOSTA);
+        return new Queue(Messaging.QUEUE_ANALISAR_PRE);
     }
 
     @Bean
     Queue analisarPosPropostaQueue() {
-        return new Queue(Messaging.QUEUE_ANALISAR_POS_PROPOSTA);
+        return new Queue(Messaging.QUEUE_ANALISAR_POS);
     }
 
     /**
@@ -45,13 +45,13 @@ public class MessagingConfiguration {
     Binding analisarPrePropostaQueueToMotorExchangeBinder() {
         return BindingBuilder.bind(analisarPrePropostaQueue())
             .to(motorExchange())
-            .with(Messaging.ANALISAR_PRE_PROPOSTA_MOTOR.getRoutingKey());
+            .with(Messaging.ANALISAR_PRE_MOTOR.getRoutingKey());
     }
 
     @Bean
     Binding analisarPosPropostaQueueToMotorExchangeBinder() {
         return BindingBuilder.bind(analisarPosPropostaQueue())
             .to(motorExchange())
-            .with(Messaging.ANALISAR_POS_PROPOSTA_MOTOR.getRoutingKey());
+            .with(Messaging.ANALISAR_POS_MOTOR.getRoutingKey());
     }
 }

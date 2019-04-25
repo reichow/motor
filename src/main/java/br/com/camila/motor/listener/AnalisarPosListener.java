@@ -10,33 +10,33 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import br.com.camila.motor.annotation.EventTemplate;
-import br.com.camila.motor.message.AnalisarPosPropostaMotorMessage;
-import br.com.camila.motor.message.PosPropostaAnalisadaMessage;
+import br.com.camila.motor.message.AnalisarPosMessage;
+import br.com.camila.motor.message.PosAnalisadaMessage;
 import br.com.camila.motor.messaging.Messaging;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@RabbitListener(queues = Messaging.QUEUE_ANALISAR_POS_PROPOSTA)
+@RabbitListener(queues = Messaging.QUEUE_ANALISAR_POS)
 @Slf4j
-public class AnalisarPosPropostaListener {
+public class AnalisarPosListener {
 
     @Autowired
     @EventTemplate
     private RabbitTemplate rabbitTemplate;
 
     @RabbitHandler
-    void receive(@Payload final AnalisarPosPropostaMotorMessage message) {
+    void receive(@Payload final AnalisarPosMessage message) {
 
         log.info("Mensagem: {}", message);
 
-        PosPropostaAnalisadaMessage pre = PosPropostaAnalisadaMessage.builder()
+        PosAnalisadaMessage pre = PosAnalisadaMessage.builder()
             .numeroProposta(message.getNumeroProposta())
             .estado(definirEstado())
             .proposta(message.getProposta()).build();
 
         rabbitTemplate.convertAndSend(
-            Messaging.POS_PROPOSTA_ANALISADA.getExchange(),
-            Messaging.POS_PROPOSTA_ANALISADA.getRoutingKey(),
+            Messaging.POS_ANALISADA.getExchange(),
+            Messaging.POS_ANALISADA.getRoutingKey(),
             pre);
     }
 
